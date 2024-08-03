@@ -22,7 +22,7 @@ NFTFetch adalah solusi inovatif yang mengubah setiap perangkat komputer menjadi 
 ### Instalasi
 
 1. Clone repositori:
-git clone https://github.com/yourusername/nftfetch.git
+git clone https://github.com/affanyunas/nftfetch.git
 Copy
 2. Masuk ke direktori proyek:
 cd nftfetch
@@ -48,7 +48,7 @@ Kami sangat menghargai kontribusi dari komunitas! Jika Anda ingin berkontribusi,
 
 ## 📜 Lisensi
 
-Proyek ini dilisensikan di bawah [MIT License](link_to_license).
+Proyek ini dilisensikan di bawah [MIT License](https://github.com/affanyunas/nftfetch/blob/main/LICENSE).
 
 ## 🙏 Penghargaan
 
