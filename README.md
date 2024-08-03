@@ -22,22 +22,28 @@ NFTFetch adalah solusi inovatif yang mengubah setiap perangkat komputer menjadi 
 ### Instalasi
 
 1. Clone repositori:
+```sh
 git clone https://github.com/affanyunas/nftfetch.git
-Copy
+```
 2. Masuk ke direktori proyek:
+```sh
 cd nftfetch
-Copy
+```
 3. Install dependensi:
+```go
 go mod tidy
-Copy
+```
 ### Penggunaan
 
 1. Menghasilkan NFT untuk perangkat Anda:
+```go
 go run . generate
-Copy
+```
+
 2. Memverifikasi kepemilikan perangkat:
+```go
 go run . compare
-Copy
+```
 ## 📘 Dokumentasi
 
 Untuk informasi lebih lanjut tentang cara kerja NFTFetch dan panduan penggunaan yang lebih detail, silakan kunjungi [Wiki](link_to_wiki) kami.
