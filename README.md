@@ -54,7 +54,7 @@ Kami sangat menghargai kontribusi dari komunitas! Jika Anda ingin berkontribusi,
 
 ## 📜 Lisensi
 
-Proyek ini dilisensikan di bawah [MIT License](https://github.com/affanyunas/nftfetch/blob/main/LICENSE).
+Proyek ini dilisensikan di bawah [MIT License](https://github.com/affanyunas/nftfetch?tab=MIT-1-ov-file).
 
 ## 🙏 Penghargaan
 
