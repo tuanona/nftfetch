@@ -111,7 +111,8 @@ func CreateOrLoadWallet() {
 	fmt.Println("Printing QR code to terminal...")
 	qrTerminal.Print(address)
 	fmt.Println("QR code for wallet address printed in terminal.")
-
+	fmt.Println("Address: ")
+	fmt.Println(address)
 	// Generate and save QR code to PNG file
 	fmt.Println("Generating QR code for wallet address...")
 	qrTerminal.Save(address, walletImagePath)
