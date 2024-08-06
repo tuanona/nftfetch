@@ -16,7 +16,6 @@ import (
 )
 
 const (
-	walletDir  = "~/.nftfetch/wallet"
 	walletFile = "mnemonics.txt"
 	configUrl  = "https://ton-blockchain.github.io/testnet-global.config.json"
 )
@@ -32,6 +31,15 @@ func CreateWallet() {
 	}
 
 	api := ton.NewAPIClient(client)
+
+	// Get the user's home directory
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		log.Fatalf("Failed to get user home directory: %v", err)
+	}
+
+	// Define wallet directory in the home directory
+	walletDir := filepath.Join(homeDir, ".nftfetch", "wallet")
 
 	// Check if wallet already exists
 	if _, err := os.Stat(filepath.Join(walletDir, walletFile)); !os.IsNotExist(err) {

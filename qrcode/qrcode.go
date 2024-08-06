@@ -17,11 +17,12 @@ type QRCodeTerminal struct{}
 // Print generates and prints the QR code for the given data to the provided writer
 func (qt *QRCodeTerminal) Print(data string) {
 	config := qrterminal.Config{
-		Level:     qrterminal.L, // Set error correction level (Low)
-		Writer:    os.Stdout,    // Output to terminal (stdout)
-		BlackChar: qrterminal.BLACK,
-		WhiteChar: qrterminal.WHITE,
-		QuietZone: 1, // Optional quiet zone around the QR code
+		Level:      qrterminal.L, // Set error correction level (Low)
+		Writer:     os.Stdout,    // Output to terminal (stdout)
+		BlackChar:  qrterminal.BLACK,
+		WhiteChar:  qrterminal.WHITE,
+		QuietZone:  1,    // Optional quiet zone around the QR code
+		HalfBlocks: true, // Use smaller half blocks
 	}
 	qrterminal.GenerateWithConfig(data, config)
 }
@@ -37,11 +38,12 @@ func (qt *QRCodeTerminal) Save(data string, filePath string) error {
 
 	// Generate QR code and write to the file
 	config := qrterminal.Config{
-		Level:     qrterminal.L, // Set error correction level (Low)
-		Writer:    file,         // Output to file
-		BlackChar: qrterminal.BLACK,
-		WhiteChar: qrterminal.WHITE,
-		QuietZone: 1, // Optional quiet zone around the QR code
+		Level:      qrterminal.L, // Set error correction level (Low)
+		Writer:     file,         // Output to file
+		BlackChar:  qrterminal.BLACK,
+		WhiteChar:  qrterminal.WHITE,
+		QuietZone:  1,    // Optional quiet zone around the QR code
+		HalfBlocks: true, // Use smaller half blocks
 	}
 	qrterminal.GenerateWithConfig(data, config)
 	return nil
