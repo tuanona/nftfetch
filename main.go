@@ -52,7 +52,7 @@ func main() {
 			fmt.Printf("Error saat membandingkan NFT: %v\n", err)
 		}
 	case "wallet":
-		wallet.CreateWallet()
+		wallet.CreateOrLoadWallet()
 	default:
 		fmt.Println("Perintah tidak valid. Penggunaan: nftfetch <generate|compare|wallet>")
 	}
