@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"image"
 	"image/color"
+	"nftfetch/wallet"
 	"os"
 	"path/filepath"
 	"strings"
@@ -35,7 +36,7 @@ const asciiChars = " .:-=+*#%@"
 
 func main() {
 	if len(os.Args) < 2 {
-		fmt.Println("Penggunaan: nftfetch <generate|compare>")
+		fmt.Println("Command: nftfetch <generate|compare|wallet>")
 		return
 	}
 
@@ -50,8 +51,10 @@ func main() {
 		if err := compare(); err != nil {
 			fmt.Printf("Error saat membandingkan NFT: %v\n", err)
 		}
+	case "wallet":
+		wallet.CreateWallet()
 	default:
-		fmt.Println("Perintah tidak valid. Penggunaan: nftfetch <generate|compare>")
+		fmt.Println("Perintah tidak valid. Penggunaan: nftfetch <generate|compare|wallet>")
 	}
 }
 
