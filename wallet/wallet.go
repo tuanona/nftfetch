@@ -16,7 +16,7 @@ import (
 )
 
 const (
-	walletDir  = ".nftfetch/wallet"
+	walletDir  = "~/.nftfetch/wallet"
 	walletFile = "mnemonics.txt"
 	configUrl  = "https://ton-blockchain.github.io/testnet-global.config.json"
 )
