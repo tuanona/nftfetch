@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	qrcodeTerminal "nftfetch/wallet/qrcode" // Import your updated qrcodeTerminal package
+	"nftfetch/wallet/qrcode"
 
 	"github.com/xssnick/tonutils-go/liteclient"
 	"github.com/xssnick/tonutils-go/ton"
@@ -32,90 +32,84 @@ func CreateOrLoadWallet() {
 
 	api := ton.NewAPIClient(client)
 
-	// Get the user's home directory
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		log.Fatalf("Failed to get user home directory: %v", err)
 	}
 
-	// Define wallet directory in the home directory
 	walletDir := filepath.Join(homeDir, ".nftfetch", "wallet")
-
-	// Path to the mnemonics file
 	mnemonicsPath := filepath.Join(walletDir, walletFile)
 
-	var walletSeed []string
+	walletSeed := loadOrCreateWallet(walletDir, mnemonicsPath)
 
-	// Check if wallet already exists
-	if _, err := os.Stat(mnemonicsPath); os.IsNotExist(err) {
-		// Wallet does not exist, create a new one
-		fmt.Println("Wallet does not exist. Creating a new wallet...")
-
-		walletSeed = wallet.NewSeed()
-		mnemonics := strings.Join(walletSeed, " ")
-
-		// Create wallet directory if it does not exist
-		if err := os.MkdirAll(walletDir, 0755); err != nil {
-			log.Fatalf("Failed to create wallet directory: %v", err)
-		}
-
-		// Save mnemonics to file
-		err = os.WriteFile(mnemonicsPath, []byte(mnemonics), 0644)
-		if err != nil {
-			log.Fatalf("Failed to save mnemonics: %v", err)
-		}
-
-		fmt.Printf("Wallet created and mnemonics saved to: %s\n", mnemonicsPath)
-	} else {
-		// Wallet exists, load the mnemonics
-		fmt.Println("Wallet already exists. Loading wallet...")
-
-		mnemonics, err := os.ReadFile(mnemonicsPath)
-		if err != nil {
-			log.Fatalf("Failed to read mnemonics: %v", err)
-		}
-
-		walletSeed = strings.Split(string(mnemonics), " ")
-	}
-
-	// Load the wallet from the mnemonics
 	w, err := wallet.FromSeed(api, walletSeed, wallet.V4R2)
 	if err != nil {
 		log.Fatalf("Failed to create wallet from seed: %v", err)
 	}
 
-	// Get the current masterchain info
+	displayWalletInfo(ctx, api, w)
+	generateQRCode(w, walletDir)
+}
+
+func loadOrCreateWallet(walletDir, mnemonicsPath string) []string {
+	if _, err := os.Stat(mnemonicsPath); os.IsNotExist(err) {
+		return createNewWallet(walletDir, mnemonicsPath)
+	}
+	return loadExistingWallet(mnemonicsPath)
+}
+
+func createNewWallet(walletDir, mnemonicsPath string) []string {
+	fmt.Println("Wallet does not exist. Creating a new wallet...")
+
+	walletSeed := wallet.NewSeed()
+	mnemonics := strings.Join(walletSeed, " ")
+
+	if err := os.MkdirAll(walletDir, 0755); err != nil {
+		log.Fatalf("Failed to create wallet directory: %v", err)
+	}
+
+	if err := os.WriteFile(mnemonicsPath, []byte(mnemonics), 0644); err != nil {
+		log.Fatalf("Failed to save mnemonics: %v", err)
+	}
+
+	fmt.Printf("Wallet created and mnemonics saved to: %s\n", mnemonicsPath)
+	return walletSeed
+}
+
+func loadExistingWallet(mnemonicsPath string) []string {
+	fmt.Println("Wallet already exists. Loading wallet...")
+
+	mnemonics, err := os.ReadFile(mnemonicsPath)
+	if err != nil {
+		log.Fatalf("Failed to read mnemonics: %v", err)
+	}
+
+	return strings.Split(string(mnemonics), " ")
+}
+
+func displayWalletInfo(ctx context.Context, api *ton.APIClient, w *wallet.Wallet) {
 	block, err := api.CurrentMasterchainInfo(ctx)
 	if err != nil {
 		log.Fatalf("Failed to get current masterchain info: %v", err)
 	}
 
-	// Get the wallet balance
 	balance, err := w.GetBalance(ctx, block)
 	if err != nil {
 		log.Fatalf("Failed to get wallet balance: %v", err)
 	}
 
 	fmt.Printf("Wallet balance: %v\n", balance)
+	fmt.Println("Wallet address:", w.Address().String())
+}
 
-	// Generate QR code for wallet address
-	address := w.Address().String() // Ensure address is in string format
+func generateQRCode(w *wallet.Wallet, walletDir string) {
+	address := w.Address().String()
+	walletImagePath := filepath.Join(walletDir, "address.png")
 
-	// Create an instance of QRCodeTerminal
-	qrTerminal := qrcodeTerminal.NewQRCodeTerminal()
+	qr := qrcode.NewQRCode()
+	qr.GenerateAndSave(address, walletImagePath)
 
-	// Define the path for the QR code image
-	walletImagePath := filepath.Join(walletDir, "wallet.png")
-
-	// Print the QR code for the wallet address to terminal
-	fmt.Println("Printing QR code to terminal...")
-	qrTerminal.Print(address)
-	fmt.Println("QR code for wallet address printed in terminal.")
-	fmt.Println("Address: ")
-	fmt.Println(address)
-	// Generate and save QR code to PNG file
-	fmt.Println("Generating QR code for wallet address...")
-	qrTerminal.Save(address, walletImagePath)
-	fmt.Printf("QR CODE in PNG format for wallet address saved to %s\n", walletImagePath)
-
+	fmt.Println("QR code for wallet address:")
+	qr.Print(address)
+	fmt.Printf("QR code image saved to: %s\n", walletImagePath)
 }

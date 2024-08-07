@@ -1,93 +1,44 @@
-package qrcodeTerminal
+package qrcode
 
 import (
-	"bytes"
-	"image"
-	"image/color"
+	"fmt"
 	"image/png"
 	"os"
 
-	"github.com/mdp/qrterminal/v3"
+	"github.com/skip2/go-qrcode"
 )
 
-// QRCodeTerminal is a struct that handles QR code generation and printing
-type QRCodeTerminal struct{}
+type QRCode struct{}
 
-// NewQRCodeTerminal initializes a new QR code terminal with default configuration
-func NewQRCodeTerminal() *QRCodeTerminal {
-	return &QRCodeTerminal{}
+func NewQRCode() *QRCode {
+	return &QRCode{}
 }
 
-// Print generates and prints the QR code for the given data to the provided writer
-func (qt *QRCodeTerminal) Print(data string) {
-	config := qrterminal.Config{
-		Level:      qrterminal.L, // Set error correction level (Low)
-		Writer:     os.Stdout,    // Output to terminal (stdout)
-		BlackChar:  qrterminal.BLACK,
-		WhiteChar:  qrterminal.WHITE,
-		QuietZone:  1,     // Optional quiet zone around the QR code
-		HalfBlocks: false, // Use full size blocks
-	}
-	qrterminal.GenerateWithConfig(data, config)
-}
-
-// Save generates a QR code for the given data and saves it to the specified file as a PNG
-func (qt *QRCodeTerminal) Save(data string, filePath string) error {
-	// Buffer to hold the QR code data
-	var buf bytes.Buffer
-
-	// Generate QR code and write to the buffer
-	config := qrterminal.Config{
-		Level:      qrterminal.L, // Set error correction level (Low)
-		Writer:     &buf,         // Output to buffer
-		BlackChar:  qrterminal.BLACK,
-		WhiteChar:  qrterminal.WHITE,
-		QuietZone:  1,     // Optional quiet zone around the QR code
-		HalfBlocks: false, // Use full size blocks
-	}
-	qrterminal.GenerateWithConfig(data, config)
-
-	// Convert buffer data to an image
-	img, err := createImageFromBuffer(buf.Bytes())
+func (q *QRCode) GenerateAndSave(data, filePath string) error {
+	qr, err := qrcode.New(data, qrcode.Medium)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to generate QR code: %v", err)
 	}
 
-	// Create or truncate the file
 	file, err := os.Create(filePath)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to create file: %v", err)
 	}
 	defer file.Close()
 
-	// Encode the image as PNG and write to the file
-	err = png.Encode(file, img)
-	if err != nil {
-		return err
+	if err := png.Encode(file, qr.Image(256)); err != nil {
+		return fmt.Errorf("failed to encode QR code as PNG: %v", err)
 	}
 
 	return nil
 }
 
-// createImageFromBuffer creates an image.Image from the QR code buffer data
-func createImageFromBuffer(buf []byte) (image.Image, error) {
-	// Determine the size of the QR code from the buffer length
-	lines := bytes.Split(buf, []byte{'\n'})
-	height := len(lines)
-	width := len(lines[0])
-
-	img := image.NewGray(image.Rect(0, 0, width, height))
-
-	for y, line := range lines {
-		for x, char := range line {
-			if char == qrterminal.BLACK[0] {
-				img.SetGray(x, y, color.Gray{Y: 0})
-			} else {
-				img.SetGray(x, y, color.Gray{Y: 255})
-			}
-		}
+func (q *QRCode) Print(data string) {
+	qr, err := qrcode.New(data, qrcode.Medium)
+	if err != nil {
+		fmt.Printf("Failed to generate QR code: %v\n", err)
+		return
 	}
 
-	return img, nil
-
+	fmt.Println(qr.ToSmallString(false))
 }

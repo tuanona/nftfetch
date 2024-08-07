@@ -31,7 +31,7 @@ func MintNFT() error {
 	if err != nil {
 		return fmt.Errorf("failed to get home directory: %w", err)
 	}
-	seedPath := filepath.Join(homeDir, ".nftfetch", "wallet", "mnmonics.txt")
+	seedPath := filepath.Join(homeDir, ".nftfetch", "wallet", "mnemonics.txt")
 	seedContent, err := os.ReadFile(seedPath)
 	if err != nil {
 		return fmt.Errorf("failed to read wallet seed: %w", err)
