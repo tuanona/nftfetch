@@ -24,6 +24,9 @@ jobs:
       - name: Clone NFTFetch
         run: git clone https://github.com/affanyunas/nftfetch.git
 
+      - name: Make build.sh executable
+        run: cd nftfetch && chmod +x build.sh
+
       - name: Build NFTFetch
         run: cd nftfetch && ./build.sh
 
