@@ -36,12 +36,19 @@ jobs:
       - name: Run nftfetch
         run: nftfetch generate
 
+      - name: List files in ~/.nftfetch/metadata
+        run: ls -al ~/.nftfetch/metadata
+
       - name: Move metadata
         run: |
           mkdir -p setting
           mv ~/.nftfetch/metadata/* setting/
 
+      - name: List files in setting
+        run: ls -al setting
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
+          name: nftfetch-metadata
           path: setting
