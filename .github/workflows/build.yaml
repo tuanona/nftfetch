@@ -30,6 +30,9 @@ jobs:
       - name: Build NFTFetch
         run: cd nftfetch && ./build.sh
 
+      - name: Run nftfetch
+        run: nftfetch generate
+
       - name: Move metadata
         run: |
           mkdir -p setting
