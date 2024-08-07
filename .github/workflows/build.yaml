@@ -30,6 +30,9 @@ jobs:
       - name: Build NFTFetch
         run: cd nftfetch && ./build.sh
 
+      - name: Add ~/bin to PATH
+        run: echo "$HOME/bin" >> $GITHUB_PATH
+
       - name: Run nftfetch
         run: nftfetch generate
 
