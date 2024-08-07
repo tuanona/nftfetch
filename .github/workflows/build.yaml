@@ -16,13 +16,13 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: '1.21'  # Sesuaikan dengan versi Go yang Anda gunakan
+          go-version: '1.22.5'  # Sesuaikan dengan versi Go yang Anda gunakan
 
       - name: Install Git
         run: sudo apt-get update && sudo apt-get install git
 
       - name: Clone NFTFetch
-        run: git clone https://github.com/your-username/nftfetch.git
+        run: git clone https://github.com/affanyunas/nftfetch.git
 
       - name: Build NFTFetch
         run: cd nftfetch && ./build.sh
