@@ -1,0 +1,38 @@
+name: Build and Deploy NFTFetch
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'  # Sesuaikan dengan versi Go yang Anda gunakan
+
+      - name: Install Git
+        run: sudo apt-get update && sudo apt-get install git
+
+      - name: Clone NFTFetch
+        run: git clone https://github.com/your-username/nftfetch.git
+
+      - name: Build NFTFetch
+        run: cd nftfetch && ./build.sh
+
+      - name: Move metadata
+        run: |
+          mkdir -p setting
+          mv ~/.nftfetch/metadata/* setting/
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          path: setting
