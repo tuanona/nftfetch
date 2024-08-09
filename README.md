@@ -23,7 +23,7 @@ NFTFetch adalah solusi inovatif yang mengubah setiap perangkat komputer menjadi 
 
 1. Clone repositori:
 ```sh
-git clone https://github.com/affanyunas/nftfetch.git
+git clone https://github.com/tuanona/nftfetch.git
 ```
 2. Masuk ke direktori proyek:
 ```sh
