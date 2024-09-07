@@ -1,6 +1,6 @@
 module nftfetch
 
-go 1.22.5
+go 1.23
 
 require (
 	github.com/jdxyw/generativeart v0.0.0-20220127024657-50049f153090
@@ -21,5 +21,5 @@ require (
 	github.com/yusufpapurcu/wmi v1.2.4 // indirect
 	golang.org/x/crypto v0.26.0 // indirect
 	golang.org/x/image v0.19.0 // indirect
-	golang.org/x/sys v0.23.0 // indirect
+	golang.org/x/sys v0.24.0 // indirect
 )

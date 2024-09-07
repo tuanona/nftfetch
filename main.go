@@ -29,7 +29,7 @@ func main() {
 	case "wallet":
 		wallet.CreateOrLoadWallet()
 	case "mint":
-		if err := mint.MintNFT(); err != nil {
+		if err := mint.Mint(); err != nil {
 			fmt.Printf("Error minting NFT: %v\n", err)
 		}
 	case "help":
