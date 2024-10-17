@@ -2,7 +2,6 @@
 
 NFTFetch adalah solusi inovatif yang mengubah setiap perangkat komputer menjadi NFT unik di blockchain TON (The Open Network). Proyek ini bertujuan untuk meningkatkan keamanan dan verifikasi kepemilikan perangkat, mencegah pencurian, dan memberikan bukti kepemilikan yang tidak dapat dipalsukan.
 
-![NFTFetch Logo](xxxxx)
 
 ## 🌟 Fitur Utama
 
@@ -10,7 +9,6 @@ NFTFetch adalah solusi inovatif yang mengubah setiap perangkat komputer menjadi 
 - 🔒 Menyimpan metadata perangkat di blockchain TON
 - 🔍 Verifikasi cepat kepemilikan perangkat
 - 🎨 Menghasilkan gambar NFT yang menarik berdasarkan metadata perangkat
-- 🔗 Integrasi dengan getgems.io untuk manajemen koleksi NFT
 
 ## 🚀 Memulai
 
