@@ -9,7 +9,6 @@ nftfetch | sebuah solusi inovatif yang mengubah setiap perangkat komputer menjad
 - 🔒 Menyimpan metadata perangkat di blockchain TON
 - 🔍 Verifikasi cepat kepemilikan perangkat
 - 🎨 Menghasilkan gambar NFT yang menarik berdasarkan metadata perangkat
-- 🔗 Integrasi dengan getgems.io untuk manajemen koleksi NFT
 
 ## 🚀 Memulai
 
