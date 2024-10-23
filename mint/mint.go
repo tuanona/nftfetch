@@ -15,7 +15,21 @@ import (
 	"github.com/xssnick/tonutils-go/tvm/cell"
 )
 
-func Mint() error {
+const MintOpcode uint64 = 4215445508
+
+type Mint struct {
+	Metadata *cell.Cell
+}
+
+// StoreMint stores the Mint message in a cell to be sent to the smart contract
+func StoreMint(src Mint) *cell.Cell {
+	b := cell.BeginCell()
+	b.MustStoreUInt(MintOpcode, 32)
+	b.MustStoreRef(src.Metadata)
+	return b.EndCell()
+}
+
+func MintNft() error {
 	client := liteclient.NewConnectionPool()
 	configUrl := "https://ton-blockchain.github.io/testnet-global.config.json"
 	err := client.AddConnectionsFromConfigUrl(context.Background(), configUrl)
@@ -37,17 +51,16 @@ func Mint() error {
 	}
 
 	// Assuming the NFT collection contract address is known
-	collectionAddr := address.MustParseAddr("kQDEyWHyHbw7RuUiVOHfTgQhAYwjJjmtDkbZbPMEnL9V0nA_")
+	collectionAddr := address.MustParseAddr("kQC14v2x_3Pc2hE1Z_z58Ks6FUSksrahn8qcerfTBKnXaJjC")
 
 	// Creating the Cell with metadata
-	metadataCell := cell.BeginCell().
-		MustStoreStringSnake(metadataHash).EndCell() // Storing metadata in a Cell
+	metadataCell := cell.BeginCell().MustStoreStringSnake(metadataHash).EndCell()
 
-	metadata := cell.BeginCell().
-		MustStoreUInt(0x1, 32). // op code for mint
-		MustStoreRef(metadataCell).
-		EndCell()
+	// Prepare the Mint message and the body for the transaction
+	mintMsg := Mint{Metadata: metadataCell}
+	body := StoreMint(mintMsg)
 
+	// Send the transaction with the mint message to the contract
 	err = w.Send(context.Background(), &wallet.Message{
 		Mode: 1,
 		InternalMessage: &tlb.InternalMessage{
@@ -55,7 +68,7 @@ func Mint() error {
 			Bounce:      true,
 			DstAddr:     collectionAddr,
 			Amount:      tlb.MustFromTON("0.05"),
-			Body:        metadata,
+			Body:        body,
 		},
 	}, true)
 
@@ -67,6 +80,7 @@ func Mint() error {
 	return nil
 }
 
+// Get wallet using the mnemonic seed from a file
 func getWallet(api *ton.APIClient) (*wallet.Wallet, error) {
 	words, err := readSeedFromFile()
 	if err != nil {
@@ -75,6 +89,7 @@ func getWallet(api *ton.APIClient) (*wallet.Wallet, error) {
 	return wallet.FromSeed(api, words, wallet.V4R2)
 }
 
+// Read seed from mnemonics.txt file
 func readSeedFromFile() ([]string, error) {
 	home, err := os.UserHomeDir()
 	if err != nil {
@@ -90,6 +105,7 @@ func readSeedFromFile() ([]string, error) {
 	return strings.Fields(string(content)), nil
 }
 
+// Read metadata hash from file
 func readMetadataHash() (string, error) {
 	home, err := os.UserHomeDir()
 	if err != nil {
