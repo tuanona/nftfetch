@@ -1,63 +1,60 @@
-# NFTFetch: Mengamankan Kepemilikan Perangkat dengan Blockchain TON
+NFTFetch: Securing Device Ownership with the TON Blockchain
 
-nftfetch | sebuah solusi inovatif yang mengubah setiap perangkat komputer menjadi NFT unik di blockchain TON (The Open Network). Proyek ini bertujuan untuk meningkatkan keamanan dan verifikasi kepemilikan perangkat, mencegah pencurian, dan memberikan bukti kepemilikan yang tidak dapat dipalsukan.
+NFTFetch is an innovative solution that transforms individual computing devices into unique NFTs on The Open Network (TON) blockchain. This project aims to enhance device security and ownership verification, deter theft, and provide irrefutable proof of ownership.
 
+Key Features
 
-## 🌟 Fitur Utama
+Unique NFT Generation: Generates a distinct NFT for each device.
+Secure Metadata Storage: Stores device metadata on the TON blockchain.
+Rapid Ownership Verification: Enables swift verification of device ownership.
+Visually Appealing NFT Generation: Generates aesthetically pleasing NFT images based on device metadata.
+Getting Started
 
-- 🖥️ Menghasilkan NFT unik untuk setiap perangkat
-- 🔒 Menyimpan metadata perangkat di blockchain TON
-- 🔍 Verifikasi cepat kepemilikan perangkat
-- 🎨 Menghasilkan gambar NFT yang menarik berdasarkan metadata perangkat
+Prerequisites
 
-## 🚀 Memulai
+Go 1.16+
+Git
+Installation
 
-### Prasyarat
+Clone the repository:
 
-- Go 1.16+
-- Git
-
-### Instalasi
-
-1. Clone repositori:
-```sh
+```Bash
 git clone https://github.com/tuanona/nftfetch.git
 ```
-2. Masuk ke direktori proyek:
-```sh
+Navigate to the project directory:
+
+```Bash
 cd nftfetch
 ```
-3. Install dependensi:
-```go
+Install dependencies:
+```Bash
 go mod tidy
 ```
-### Penggunaan
+Usage
+Generate an NFT for your device:
 
-1. Menghasilkan NFT untuk perangkat Anda:
-```go
+```Bash
 go run . generate
 ```
+Verify device ownership:
 
-2. Memverifikasi kepemilikan perangkat:
-```go
+```Bash
 go run . compare
 ```
-## 📘 Dokumentasi
+Documentation
 
-Untuk informasi lebih lanjut tentang cara kerja NFTFetch dan panduan penggunaan yang lebih detail, silakan kunjungi [Wiki](link_to_wiki) kami.
+For comprehensive information regarding NFTFetch's functionality and detailed usage instructions, please consult our [Wiki](tautan ke Wiki jika ada).
 
-## 🤝 Kontribusi
+Contributions
 
-Kami sangat menghargai kontribusi dari komunitas! Jika Anda ingin berkontribusi, silakan baca [CONTRIBUTING.md](link_to_contributing.md) untuk informasi lebih lanjut.
+Community contributions are highly valued. If you wish to contribute, please refer to [CONTRIBUTING.md]() for further information.
 
-## 📜 Lisensi
+License
 
-Proyek ini dilisensikan di bawah [MIT License](https://github.com/affanyunas/nftfetch?tab=MIT-1-ov-file).
+This project is licensed under the [MIT License]().
 
-## 🙏 Penghargaan
+Acknowledgements
 
-Terima kasih kepada tim The Open Network (TON) dan getgems.io atas dukungan dan infrastruktur mereka yang luar biasa.
+We extend our gratitude to The Open Network (TON) team and getgems.io for their invaluable support and infrastructure.
 
----
-
-Dibuat dengan ❤️ oleh [Affan Yunas]
+Created with ❤️ by [Affan Yunas]
