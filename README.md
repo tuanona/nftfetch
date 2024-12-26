@@ -57,4 +57,4 @@ Acknowledgements
 
 We extend our gratitude to The Open Network (TON) team and getgems.io for their invaluable support and infrastructure.
 
-Created with ❤️ by [Affan Yunas]
+Created with ❤️ by [tuanona]
